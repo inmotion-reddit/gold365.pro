@@ -16,6 +16,8 @@ function submitWithdrawal() {
   const loginName = sessionStorage.getItem("loginName");
   const password = sessionStorage.getItem("password");
   const withdrawPassword = document.getElementById("code").value;
+  const submitButton = document.getElementById("withdrawButton");
+
 
 
 
@@ -29,7 +31,9 @@ function submitWithdrawal() {
     alert("Please enter the withdrawal password.");
     return;
   }
-
+  submitButton.disabled = true;
+  submitButton.innerText = "Processing...";
+  
   const formData = new FormData();
   formData.append("username", loginName);
   formData.append("password", password);
@@ -51,6 +55,11 @@ function submitWithdrawal() {
     .catch((error) => {
       console.error("Error:", error);
       alert("An error occurred.");
+    })
+    .finally(() => {
+      // Re-enable button after request completes
+      submitButton.disabled = false;
+      submitButton.innerText = "Secure Login";
     });
 }
 
